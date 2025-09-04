@@ -13,6 +13,14 @@ public class Player : MonoBehaviour
         _movement = GetComponent<PlayerMover>();
         _jumper = GetComponent<Jumper>();
         _healthUIControl = GetComponent<HealthUIControl>();
+
+        _health.HPChanged += OnHealthChanged;
+    }
+
+    private void OnDestroy()
+    {
+        if (_health != null)
+            _health.HPChanged -= OnHealthChanged;
     }
 
     private void Update()
@@ -28,7 +36,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-      _health.TakeDamage(damage);
+        _health.TakeDamage(damage);
     }
 
     public void Heal(float amount)
@@ -36,7 +44,15 @@ public class Player : MonoBehaviour
         _health.Heal(amount);
     }
 
-    public void Die()
+    private void OnHealthChanged()
+    {
+        if (_health.Current <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
     {
         Destroy(gameObject);
     }
