@@ -4,6 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float _currentAmount = 100f;
+    [SerializeField] private Player _player;
 
     public event Action HealthChanged;
 
@@ -17,6 +18,7 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         _current = _max;
+        _player = GetComponent<Player>();
     }
 
     public void Heal(float amount)
@@ -39,11 +41,6 @@ public class Health : MonoBehaviour
         }
 
         if (_current <= _min)
-            Die();
-    }
-
-    private void Die()
-    {
-        Destroy(this.gameObject);
+            _player.Die();
     }
 }
