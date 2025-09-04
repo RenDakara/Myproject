@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class Attacker : MonoBehaviour
 {
     [SerializeField] private float _damage = 5f;
-    [SerializeField] private float _attackRange = 1f;
+    [SerializeField] private float _AttackerRange = 1f;
 
     private CharacterAnimator _enemyRenderer;
 
@@ -18,7 +16,7 @@ public class Attack : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Player player))
         {
-            if (Vector2.Distance(transform.position, player.transform.position) <= _attackRange)
+            if (Vector2.Distance(transform.position, player.transform.position) <= _AttackerRange)
             {
                 player.TakeDamage(_damage);
                 _enemyRenderer.PlayRunningAnimation(false);
