@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float _currentAmount = 100f;
     [SerializeField] private Player _player;
 
-    public event Action HealthChanged;
+    public event Action HPChanged;
 
     private float _max = 100f;
     private float _min = 0f;
@@ -27,7 +27,7 @@ public class Health : MonoBehaviour
         {
             _current += amount;
             _current = Mathf.Clamp(_current, _min, _max);
-            HealthChanged?.Invoke();
+            HPChanged?.Invoke();
         }
     }
 
@@ -37,10 +37,7 @@ public class Health : MonoBehaviour
         {
             _current -= damage;
             _current = Mathf.Clamp(_current, _min, _max);
-            HealthChanged?.Invoke();
+            HPChanged?.Invoke();
         }
-
-        if (_current <= _min)
-            _player.Die();
     }
 }
