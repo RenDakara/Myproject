@@ -35,4 +35,9 @@ public class Player : MonoBehaviour
     {
         _health.Heal(amount);
     }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
 }
