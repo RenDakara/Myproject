@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ItemCollector : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     private float _healAmount = 5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -13,13 +14,10 @@ public class ItemCollector : MonoBehaviour
         {
             coin.Collect();
         }
-       else if (collision.TryGetComponent(out HealthPack healthPack))
+        else if (collision.TryGetComponent(out HealthPack healthPack))
         {
             healthPack.Collect();
-            if (TryGetComponent(out Player player))
-            {
-                player.Heal(_healAmount);
-            }
+            _player.Heal(_healAmount);
         }
     }
 }
