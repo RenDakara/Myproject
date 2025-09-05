@@ -15,6 +15,12 @@ public class ItemSpawner : MonoBehaviour
         SpawnHealthPack();
     }
 
+    private void OnDestroy()
+    {
+        _coin.OnItemCollected -= HandleItemCollected;
+        _healthPack.OnItemCollected += HandleItemCollected;
+    }
+
     private void HandleItemCollected(Item item)
     {
         Destroy(item.gameObject);
