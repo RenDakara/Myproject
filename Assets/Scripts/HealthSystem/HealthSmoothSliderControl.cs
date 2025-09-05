@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class HealthSmoothSlider : HealthUIParent
+public class HealthSmoothSlider : HealthView
 {
     [SerializeField] private Slider _slider;
 
