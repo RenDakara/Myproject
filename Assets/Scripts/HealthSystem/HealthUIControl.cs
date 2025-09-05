@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class HealthUIControl : HealthUIParent
+public class HealthUIControl : HealthView
 {
     [SerializeField] private TextMeshProUGUI _text;
 
