@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthSlider : HealthUIParent
+public class HealthSlider : HealthView
 {
     [SerializeField] private Slider _slider;
 
