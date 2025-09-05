@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
-public abstract class HealthUIParent : MonoBehaviour
+public abstract class HealthView : MonoBehaviour
 {
     protected Health Health;
 
