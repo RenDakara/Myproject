@@ -14,13 +14,13 @@ public class Player : MonoBehaviour
         _jumper = GetComponent<Jumper>();
         _healthUIControl = GetComponent<HealthUIControl>();
 
-        _health.HPChanged += OnHealthChanged;
+        _health.ValueChanged += OnHealthChanged;
     }
 
     private void OnDestroy()
     {
         if (_health != null)
-            _health.HPChanged -= OnHealthChanged;
+            _health.ValueChanged -= OnHealthChanged;
     }
 
     private void Update()
