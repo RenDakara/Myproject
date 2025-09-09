@@ -9,17 +9,24 @@ public class Enemy : MonoBehaviour
     private CharacterAnimator _enemyRenderer;
     private EnemyMover _enemyMover;
     private EnemyChaser _enemyChaser;
+    private Health _health;
 
     private void Awake()
     {
         _enemyChaser = GetComponent<EnemyChaser>();
         _enemyRenderer = GetComponent<CharacterAnimator>();
         _enemyMover = GetComponent<EnemyMover>();
+        _health = GetComponent<Health>();
     }
 
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
     }
 
     private void Update()
