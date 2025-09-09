@@ -6,9 +6,7 @@ public class HealthSmoothSlider : HealthView
 {
     [SerializeField] private Slider _slider;
 
-    private float _smoothSpeed = 10f;
     private float _displayedHealth;
-    private float _minDifference = 0.01f;
 
     private Coroutine _animationCoroutine;
 
@@ -25,8 +23,10 @@ public class HealthSmoothSlider : HealthView
     protected override void OnHealthChanged()
     {
         base.OnHealthChanged();
+
         if (_animationCoroutine != null)
             StopCoroutine(_animationCoroutine);
+
         _animationCoroutine = StartCoroutine(AnimateSlider());
     }
 
