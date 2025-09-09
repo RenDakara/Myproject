@@ -9,7 +9,7 @@ public abstract class HealthView : MonoBehaviour
     {
         Health = GetComponent<Health>();
 
-        Health.HPChanged += OnHealthChanged;
+        Health.ValueChanged += OnHealthChanged;
 
         Initialize();
         UpdateUI();
@@ -18,7 +18,7 @@ public abstract class HealthView : MonoBehaviour
     private void OnDestroy()
     {
         if (Health != null)
-            Health.HPChanged -= OnHealthChanged;
+            Health.ValueChanged -= OnHealthChanged;
     }
 
     protected virtual void OnHealthChanged()
