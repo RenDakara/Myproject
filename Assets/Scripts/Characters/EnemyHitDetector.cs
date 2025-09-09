@@ -1,14 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHitDetector : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Enemy enemy))
+        int playerFeetLayer = LayerMask.NameToLayer("PlayerFeet");
+        int enemyHeadLayer = LayerMask.NameToLayer("EnemyHead");
+
+        if (gameObject.layer == enemyHeadLayer && collision.gameObject.layer == playerFeetLayer)
         {
-            enemy.Die();
+            Enemy enemy = GetComponentInParent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.Die();
+            }
         }
     }
 }
