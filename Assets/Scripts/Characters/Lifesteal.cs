@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Player))]
+[RequireComponent(typeof(Health))]
 public class Lifesteal : MonoBehaviour
 {
     [SerializeField] private Player _player;
@@ -12,6 +15,7 @@ public class Lifesteal : MonoBehaviour
 
     private InputService _inputService;
     private Coroutine _abilityCoroutine;
+    private HealthSmoothSlider _healthSmoothSlider;
 
     private float _abilityTime = 6f;
     private float _abilityCooldown = 4f;
@@ -24,16 +28,16 @@ public class Lifesteal : MonoBehaviour
 
     private void Awake()
     {
-        _drainCollider = gameObject.AddComponent<CircleCollider2D>();
+        _healthSmoothSlider = GetComponent<HealthSmoothSlider>();
+        _drainCollider = GetComponent<CircleCollider2D>();
         _drainCollider.isTrigger = true;
         _drainCollider.radius = _abilityRadius;
         _drainCollider.enabled = false;
         _drainCollider.gameObject.layer = LayerMask.NameToLayer("Ability");
         _inputService = GetComponent<InputService>();
         _player = GetComponent<Player>();
-        _player = FindObjectOfType<Player>();
 
-        if(_abilityRadius != null)
+        if (_abilityRadiusVisual != null)
         {
             float diameter = _abilityRadius * _radiusMultiplyer;
             _abilityRadiusVisual.localScale = new Vector3(diameter, diameter, _standardDepth);
@@ -49,14 +53,16 @@ public class Lifesteal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_abilityOnCooldown) return;
+        if (_abilityOnCooldown)
+            return;
 
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            Health enemyHealth = enemy.GetComponent<Health>();
-
-            if (enemyHealth != null && !_enemysInRange.Contains(enemyHealth))
-                _enemysInRange.Add(enemyHealth);
+            if (enemy.TryGetComponent(out Health enemyHealth))
+            {
+                if (enemyHealth != null && !_enemysInRange.Contains(enemyHealth))
+                    _enemysInRange.Add(enemyHealth);
+            }
         }
     }
 
@@ -64,10 +70,11 @@ public class Lifesteal : MonoBehaviour
     {
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            Health enemyHealth = enemy.GetComponent<Health>();
-
-            if (enemyHealth != null)
-                _enemysInRange.Remove(enemyHealth);
+            if (enemy.TryGetComponent(out Health enemyHealth))
+            {
+                if (enemyHealth != null)
+                    _enemysInRange.Remove(enemyHealth);
+            }
         }
     }
 
@@ -76,6 +83,8 @@ public class Lifesteal : MonoBehaviour
         _abilityActive = true;
         _drainCollider.enabled = true;
         _abilityRadiusVisual.gameObject.SetActive(true);
+
+        _healthSmoothSlider.AnimateProgress();
 
         float elapsed = 0f;
 
@@ -105,6 +114,9 @@ public class Lifesteal : MonoBehaviour
         _abilityActive = false;
         _drainCollider.enabled = false;
         _abilityRadiusVisual.gameObject.SetActive(false);
+
+        if (_healthSmoothSlider != null)
+            _healthSmoothSlider.AnimateProgress();
 
         _abilityOnCooldown = true;
         yield return new WaitForSeconds(_abilityCooldown);
