@@ -11,22 +11,14 @@ public class Enemy : MonoBehaviour
     private EnemyChaser _enemyChaser;
     private Health _health;
 
+    public Health Health { get; private set; }
+
     private void Awake()
     {
         _enemyChaser = GetComponent<EnemyChaser>();
         _enemyRenderer = GetComponent<CharacterAnimator>();
         _enemyMover = GetComponent<EnemyMover>();
         _health = GetComponent<Health>();
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
-
-    public void TakeDamage(float damage)
-    {
-        _health.TakeDamage(damage);
     }
 
     private void Update()
@@ -39,6 +31,16 @@ public class Enemy : MonoBehaviour
         {
             Patrol();
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
     }
 
     private void Patrol()
