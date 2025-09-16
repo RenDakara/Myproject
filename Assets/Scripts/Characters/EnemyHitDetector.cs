@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class EnemyHitDetector : MonoBehaviour
 {
+    string _playerFeet = "PlayerFeet";
+    string _enemyHead = "EnemyHead";
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        int playerFeetLayer = LayerMask.NameToLayer("PlayerFeet");
-        int enemyHeadLayer = LayerMask.NameToLayer("EnemyHead");
+        int playerFeetLayer = LayerMask.NameToLayer(_playerFeet);
+        int enemyHeadLayer = LayerMask.NameToLayer(_enemyHead);
 
         if (gameObject.layer == enemyHeadLayer && collision.gameObject.layer == playerFeetLayer)
         {
