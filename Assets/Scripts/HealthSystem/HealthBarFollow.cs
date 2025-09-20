@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealthBarFollow : MonoBehaviour
@@ -8,13 +5,15 @@ public class HealthBarFollow : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private Vector3 _offset;
 
-    private void Update()
+    private void LateUpdate()
     {
         if (_target != null)
-        transform.position = _target.position + _offset;
-
-        if (_target == null)
+        {
+            transform.position = _target.position + _offset;
+        }
+        else
+        {
             gameObject.SetActive(false);
-            
+        }
     }
 }

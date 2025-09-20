@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyHitDetector : MonoBehaviour
 {
-    string _playerFeet = "PlayerFeet";
-    string _enemyHead = "EnemyHead";
+    private string _playerFeet = "PlayerFeet";
+    private string _enemyHead = "EnemyHead";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

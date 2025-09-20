@@ -1,5 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Jumper))]
+[RequireComponent(typeof(PlayerMover))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(HealthUIControl))]
 public class Player : MonoBehaviour
 {
     private PlayerMover _movement;

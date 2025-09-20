@@ -1,17 +1,13 @@
-using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Transform _playerPosition;
-    [SerializeField] private float _detectionRange = 5f;
-
     private CharacterAnimator _enemyRenderer;
     private EnemyMover _enemyMover;
     private EnemyChaser _enemyChaser;
     private Health _health;
 
-    public Health Health { get; private set; }
+    private bool _isChasing = false;
 
     private void Awake()
     {
@@ -23,13 +19,30 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (IsPlayerInRange())
+        if (_isChasing)
         {
-            _enemyChaser.ChasePlayer();
+            _enemyRenderer.PlayRunningAnimation(true);
+            _enemyRenderer.PlayAttackAnimation(false);
         }
         else
         {
             Patrol();
+        }
+    }
+
+    public void StartChasing()
+    {
+        if (!_isChasing)
+        {
+            _isChasing = true;
+        }
+    }
+
+    public void StopChasing()
+    {
+        if (_isChasing)
+        {
+            _isChasing = false;
         }
     }
 
@@ -48,11 +61,6 @@ public class Enemy : MonoBehaviour
         _enemyRenderer.PlayAttackAnimation(false);
         _enemyRenderer.PlayRunningAnimation(true);
         _enemyMover.Patrol();
-    }
-
-    private bool IsPlayerInRange()
-    {
-        return (_playerPosition.position - transform.position).sqrMagnitude <= _detectionRange * _detectionRange;
     }
 }
 
