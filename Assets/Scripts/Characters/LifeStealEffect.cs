@@ -1,17 +1,13 @@
-using System.Collections.Generic;
+using UnityEngine;
 
-public static class LifestealEffect
+public class LifestealEffect : MonoBehaviour
 {
-    public static void ApplyEffect(Player player, IReadOnlyList<Health> enemies, float healAmount)
+    public void ApplyEffect(Player player, Health enemy, float healAmount)
     {
-        for (int i = enemies.Count - 1; i >= 0; i--)
+        if (enemy != null)
         {
-            var enemyHealth = enemies[i];
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(healAmount);
-                player.Heal(healAmount);
-            }
+            enemy.TakeDamage(healAmount);
+            player.Heal(healAmount);
         }
     }
 }
